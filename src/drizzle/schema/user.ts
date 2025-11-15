@@ -1,8 +1,8 @@
-import { pgTable, pgEnum, text } from "drizzle-orm/pg-core";
-import { id, createdAt, updatedAt } from "../schemaHelpers.ts";
 import { relations } from "drizzle-orm";
-import { PostTable } from "./post.ts";
+import { pgEnum, pgTable, text } from "drizzle-orm/pg-core";
+import { createdAt, id, updatedAt } from "../schemaHelpers.ts";
 import { commentTable } from "./comment.ts";
+import { PostTable } from "./post.ts";
 
 export const userRoles = ["admin", "author", "subscriber"] as const;
 export type UserRole = (typeof userRoles)[number];

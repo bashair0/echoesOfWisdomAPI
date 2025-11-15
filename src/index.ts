@@ -1,16 +1,22 @@
+import { clerkClient, getAuth, requireAuth } from "@clerk/express";
+import cors from "cors";
 import "dotenv/config";
 import express from "express";
-import { clerkClient, requireAuth, getAuth } from "@clerk/express";
+import { getAllCategories } from "./controllers/categoryController.ts";
+import { db } from "./drizzle/db.ts";
+import { CategoryTable, UserTable } from "./drizzle/schema.ts";
+import { categoryRouter } from "./routes/categoryRouter.ts";
 import { postRouter } from "./routes/postRouter.ts";
 
 const app = express();
-const PORT = 3000;
+const PORT = 8080;
+app.use(express.json());
+app.use(cors());
 
 app.get("/", async (req, res) => {
-  res.json("Hello World!");
+  res.send("Hello, World!");
+  
 });
-
-app.use("/posts", postRouter);
 
 // Use requireAuth() to protect this route
 // If user isn't authenticated, requireAuth() will redirect back to the homepage
@@ -24,7 +30,12 @@ app.get("/protected", requireAuth(), async (req, res) => {
   //return res.json({ user })
 });
 
+
+
+app.use("/posts", postRouter);
+app.use("/categories", categoryRouter);
+
 // Start the server and listen on the specified port
 app.listen(PORT, () => {
   console.log(`Example app listening at http://localhost:${PORT}`);
-});
+})

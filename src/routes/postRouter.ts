@@ -1,6 +1,7 @@
 import { Router } from "express";
-import { getAllPosts } from "../controllers/postsController.ts";
+import { createNewPost, getAllPosts } from "../controllers/postController.ts";
 const postRouter = Router();
 
 postRouter.get("/", getAllPosts);
+postRouter.post("/", createNewPost);
 export { postRouter };

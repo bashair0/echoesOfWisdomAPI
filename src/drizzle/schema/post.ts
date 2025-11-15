@@ -1,9 +1,9 @@
-import { pgEnum, pgTable, uuid, text } from "drizzle-orm/pg-core";
-import { createdAt, id, updatedAt } from "../schemaHelpers.ts";
-import { UserTable } from "./user.ts";
-import { PostCategoryTable } from "./postCategory.ts";
 import { relations } from "drizzle-orm";
+import { pgEnum, pgTable, text, uuid } from "drizzle-orm/pg-core";
+import { createdAt, id, updatedAt } from "../schemaHelpers.ts";
 import { commentTable } from "./comment.ts";
+import { PostCategoryTable } from "./postCategory.ts";
+import { UserTable } from "./user.ts";
 
 export const status = ["draft", "published"] as const;
 export type Status = (typeof status)[number];
@@ -16,6 +16,12 @@ export const PostTable = pgTable("posts", {
     .notNull(),
   title: text().notNull(),
   slug: text().notNull().unique(),
+  imageUrl: text(),
+  body: text().notNull(),
+  translation: text(),
+  useCases: text().array(),
+  similarIdioms: text().array(),
+  conclusion: text().notNull(),
   status: statusEnum().default("draft").notNull(),
   createdAt,
   updatedAt,
